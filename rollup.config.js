@@ -6,10 +6,10 @@ import es2020 from 'es2020'
 
 export default [
   {
-    input: 'gui.js',
-    output: 'dist/gui.js',
+    input: 'index.js',
+    output: 'dist/controls-gui.js',
     format: 'umd',
-    name: 'ControlPanelGUI',
+    name: 'ControlsGUI',
   },
 ].map(bundle => ({
   input: bundle.input,
