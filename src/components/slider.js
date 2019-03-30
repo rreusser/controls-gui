@@ -31,7 +31,7 @@ module.exports = {
               value: field.value,
               onInput: event => this.props.field.value = parseFloat(event.target.value)
             }),
-            h('span', {className: `${className}__value`}, field.value.toFixed(4).replace(/\.?0*$/,'')) )
+            h('span', {className: `${className}__sliderValue`}, field.value.toFixed(4).replace(/\.?0*$/,'')) )
         )
       );
     }
@@ -116,6 +116,24 @@ module.exports = {
         ${theme.focusBorder}
       }
 
+      .${className}__sliderValue {
+        position: absolute;
+        pointer-events: none;
+        top: 0;
+        z-index: 11;
+        line-height: ${theme.fieldHeight};
+        height: ${theme.fieldHeight};
+        display: inline-block;
+        right: 15px;
+        text-shadow:  1px  0   ${theme.visibilityFontColor},
+                      0    1px ${theme.visibilityFontColor},
+                     -1px  0   ${theme.visibilityFontColor},
+                      0   -1px ${theme.visibilityFontColor},
+                      1px  1px ${theme.visibilityFontColor},
+                      1px -1px ${theme.visibilityFontColor},
+                     -1px  1px ${theme.visibilityFontColor},
+                     -1px -1px ${theme.visibilityFontColor};
+      }
     `;
   }
 };
