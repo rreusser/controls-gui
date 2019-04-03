@@ -24,6 +24,7 @@ module.exports = function (className, theme, components) {
       color: ${theme.fontColor};
       ${theme.fontSize ? `font-size: ${theme.fontSize}` : ''};
       ${theme.fontFamily ? `font-family: ${theme.fontFamily}` : ''};
+      max-width: 100%;
     }
 
     .${className}__field {

@@ -12,17 +12,12 @@ module.exports = {
     getContent: function (props) {
       this.content = props.field.value;
       if (typeof this.content === 'function') {
-        this.content = this.content(this.props.state, props.field.parent.value);
+        this.content = this.content(h, {
+          field: props.field,
+          state: props.state,
+        });
       }
       return this.content;
-    },
-
-    componentDidMount: function () {
-      this.el.innerHTML = this.getContent(this.props);
-    },
-
-    componentWillReceiveProps: function (nextProps) {
-      this.el.innerHTML = this.getContent(nextProps);
     },
 
     render: function () {
@@ -33,7 +28,7 @@ module.exports = {
         h('div', {
           ref: this.getRef,
           className: `${className}__rawContent`
-        })
+        }, this.getContent(this.props))
       );
     }
   }),
@@ -41,14 +36,18 @@ module.exports = {
     return `
       .${className}__field--raw {
         height: auto;
-        padding: 5px 7px 5px 10px;
+        padding: 0 7px 0 10px;
+        overflow: hidden;
       }
 
-      .
-      ${className}__rawContent {
+      .${className}__rawContent {
         max-width: 100%;
         margin: 0;
         padding: 0;
+      }
+
+      .${className}__rawContent a {
+        color: inherit;
       }
 
       .${className}__rawContent::before {

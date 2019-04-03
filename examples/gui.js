@@ -1,4 +1,4 @@
-var wrapGui = require('../');
+var wrapGui = require('../index');
 var Controls = require('../../controls-state');
 var h = require('h');
 var beautify = require('json-beautify');
@@ -174,11 +174,11 @@ function balance () {
 
 var controls = window.controls = Controls(
   {
-    instructions: Controls.Raw(`<p>
+    instructions: Controls.Raw(h => h('p', null, `
       Hello! Below you'll find a number of controls!
       You can modify the values and watch as they feed
-      directly into the JSON-serialized output.
-    </p>`),
+      directly into the JSON-serialized output.`
+    )),
 
     name: 'test',
 
@@ -206,13 +206,13 @@ var controls = window.controls = Controls(
       label: 'Simulation',
     }),
     analysis: Controls.Section({
-      content: Controls.Raw((state, analysis) => `<p>
+      content: Controls.Raw((h, props) => h('p', null, `
         The sliders below will update each other in
         an opposing manner. They do this by checking
         which has been updated and then updating the
-        opposing control. Currently the cost is ${analysis.cost.toFixed(2)}
-        and the benefit is ${analysis.benefit.toFixed(2)}.
-      </p>`),
+        opposing control. Currently the cost is ${props.state.analysis.cost.toFixed(2)}
+        and the benefit is ${props.state.analysis.benefit.toFixed(2)}.
+      </p>`)),
 
       cost: Controls.Slider(1, {
         min: 0,
@@ -237,7 +237,7 @@ var controls = window.controls = Controls(
         }
       }),
     output: Controls.Section({
-      content: Controls.Raw(state => `<pre>JSON.stringify(controls):\n${beautify(controls, null, 2, 0)}</pre>`)
+      content: Controls.Raw((h, state) => h('p', null, h('pre', null, beautify(controls, null, 2, 0))))
     }, {
       enumerable: false,
       label: 'JSON Output',
@@ -247,7 +247,7 @@ var controls = window.controls = Controls(
 
 var gui1 = wrapGui(controls, {
   containerCSS: "position:fixed;top:0;right:8px;max-width:300px",
-  theme: {
+  /*theme: {
     fontFamily: `${FONT_FAMILY}, Helvetica, sans-serif`,
     fontColor: 'black',
     controlBgColor: 'white',
@@ -264,7 +264,7 @@ var gui1 = wrapGui(controls, {
     visibilityFontColor: '#fff',
     sliderThumbColor: '#aaa',
     focusBorderColor: '#888',
-  }
+  }*/
 });
 
 var gui2 = wrapGui(controls, {

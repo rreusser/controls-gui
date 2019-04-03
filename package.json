@@ -1,13 +1,13 @@
 {
   "name": "controls-gui",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A GUI for managing state",
   "main": "dist/controls-gui.min.js",
   "scripts": {
+    "start": "budo --open --live --host localhost examples/gui.js",
     "build": "npm run bundle:rollup && npm run minify:rollup",
     "bundle:rollup": "mkdir -p dist && rollup -c",
     "minify:rollup": "uglifyjs -cm -o dist/controls-gui.min.js dist/controls-gui.js",
-    "start": "budo --open --live --host localhost examples/controls-gui.js",
     "build:example": "rm -rf docs && mkdir -p docs && browserify examples/gui.js -t es2020 -t [ envify --NODE_ENV production ] | uglifyjs -cm | indexhtmlify > docs/index.html"
   },
   "keywords": [],

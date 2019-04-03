@@ -82,7 +82,7 @@ module.exports = function GuiFactory () {
     }
 
     preact.render(preact.h(App, {
-      state: state.$field.value
+      state: state
     }), opts.root);
 
     return state;

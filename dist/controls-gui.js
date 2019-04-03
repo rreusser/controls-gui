@@ -1068,7 +1068,7 @@
 	  theme.controlBorderRadius = toPx(theme.controlBorderRadius);
 	  theme.focusBorder = '\n    outline: none;\n    border-color: ' + theme.focusBorderColor + ';\n    box-shadow: 0 0 3px ' + theme.focusBorderColor + ';\n  ';
 
-	  return '\n    .' + className + ' {\n      color: ' + theme.fontColor + ';\n      ' + (theme.fontSize ? 'font-size: ' + theme.fontSize : '') + ';\n      ' + (theme.fontFamily ? 'font-family: ' + theme.fontFamily : '') + ';\n    }\n\n    .' + className + '__field {\n      position: relative;\n      background-color: ' + theme.fieldBgColor + ';\n      border-right: 1px solid ' + theme.fieldBorderColor + ';\n    }\n\n    .' + className + '__label {\n      display: block;\n      height: ' + theme.fieldHeight + ';\n      line-height: ' + theme.fieldHeight + ';\n      display: flex;\n      flex-direction: row;\n      background-color: ' + theme.fieldBgColor + ';\n    }\n\n    .' + className + '__field:hover {\n      background-color: ' + theme.fieldHoverColor + ';\n    }\n\n    .' + className + '__container {\n      display: flex;\n      flex-direction: row;\n      align-content: stretch;\n      justify-content: stretch;\n    \n      height: ' + theme.fieldHeight + ';\n      flex: 1;\n      position: relative;\n      align-items: center;\n      position: relative;\n\n      min-width: ' + theme.minControlWidth + ';\n      width: ' + theme.fieldHeight + ';\n      padding-right: 8px;\n      text-indent: 8px;\n    }\n\n    .' + className + '__labelText {\n      user-select: none;\n      -moz-user-select: -moz-none;\n      text-indent: 8px;\n      margin-right: 4px;\n      display: inline-block;\n      min-width: ' + theme.minLabelWidth + ';\n      line-height: ' + theme.fieldHeight + ';\n    }\n\n    .' + className + '__field::before {\n      content: \'\';\n      width: 3px;\n      display: inline-block;\n      vertical-align: middle;\n      position: absolute;\n      top: 0;\n      left: 0;\n      bottom: 0;\n    }\n\n    .' + className + '__field--text::before { background-color: #49f; }\n    .' + className + '__field--color::before { background-color: #94f; }\n    .' + className + '__field--checkbox::before { background-color: #f49; }\n    .' + className + '__field--slider::before { background-color: #f84; }\n    .' + className + '__field--select::before { background-color: #8f4; }\n    .' + className + '__field--button > button::before { background-color: #8ff; }\n\n    ' + Object.keys(components).map(function (name) {
+	  return '\n    .' + className + ' {\n      color: ' + theme.fontColor + ';\n      ' + (theme.fontSize ? 'font-size: ' + theme.fontSize : '') + ';\n      ' + (theme.fontFamily ? 'font-family: ' + theme.fontFamily : '') + ';\n      max-width: 100%;\n    }\n\n    .' + className + '__field {\n      position: relative;\n      background-color: ' + theme.fieldBgColor + ';\n      border-right: 1px solid ' + theme.fieldBorderColor + ';\n    }\n\n    .' + className + '__label {\n      display: block;\n      height: ' + theme.fieldHeight + ';\n      line-height: ' + theme.fieldHeight + ';\n      display: flex;\n      flex-direction: row;\n      background-color: ' + theme.fieldBgColor + ';\n    }\n\n    .' + className + '__field:hover {\n      background-color: ' + theme.fieldHoverColor + ';\n    }\n\n    .' + className + '__container {\n      display: flex;\n      flex-direction: row;\n      align-content: stretch;\n      justify-content: stretch;\n    \n      height: ' + theme.fieldHeight + ';\n      flex: 1;\n      position: relative;\n      align-items: center;\n      position: relative;\n\n      min-width: ' + theme.minControlWidth + ';\n      width: ' + theme.fieldHeight + ';\n      padding-right: 8px;\n      text-indent: 8px;\n    }\n\n    .' + className + '__labelText {\n      user-select: none;\n      -moz-user-select: -moz-none;\n      text-indent: 8px;\n      margin-right: 4px;\n      display: inline-block;\n      min-width: ' + theme.minLabelWidth + ';\n      line-height: ' + theme.fieldHeight + ';\n    }\n\n    .' + className + '__field::before {\n      content: \'\';\n      width: 3px;\n      display: inline-block;\n      vertical-align: middle;\n      position: absolute;\n      top: 0;\n      left: 0;\n      bottom: 0;\n    }\n\n    .' + className + '__field--text::before { background-color: #49f; }\n    .' + className + '__field--color::before { background-color: #94f; }\n    .' + className + '__field--checkbox::before { background-color: #f49; }\n    .' + className + '__field--slider::before { background-color: #f84; }\n    .' + className + '__field--select::before { background-color: #8f4; }\n    .' + className + '__field--button > button::before { background-color: #8ff; }\n\n    ' + Object.keys(components).map(function (name) {
 	    var css = components[name].css;
 	    if (!css) return '';
 	    return css(className, theme);
@@ -1153,7 +1153,7 @@
 	    }
 
 	    preact$2.render(preact$2.h(App, {
-	      state: state.$field.value
+	      state: state
 	    }), opts.root);
 
 	    return state;
@@ -1496,17 +1496,12 @@
 	    getContent: function (props) {
 	      this.content = props.field.value;
 	      if (typeof this.content === 'function') {
-	        this.content = this.content(this.props.state, props.field.parent.value);
+	        this.content = this.content(h$8, {
+	          field: props.field,
+	          state: props.state
+	        });
 	      }
 	      return this.content;
-	    },
-
-	    componentDidMount: function () {
-	      this.el.innerHTML = this.getContent(this.props);
-	    },
-
-	    componentWillReceiveProps: function (nextProps) {
-	      this.el.innerHTML = this.getContent(nextProps);
 	    },
 
 	    render: function () {
@@ -1516,11 +1511,11 @@
 	      }, h$8('div', {
 	        ref: this.getRef,
 	        className: className + '__rawContent'
-	      }));
+	      }, this.getContent(this.props)));
 	    }
 	  }),
 	  css: function (className, theme) {
-	    return '\n      .' + className + '__field--raw {\n        height: auto;\n        padding: 5px 7px 5px 10px;\n      }\n\n      .\n      ' + className + '__rawContent {\n        max-width: 100%;\n        margin: 0;\n        padding: 0;\n      }\n\n      .' + className + '__rawContent::before {\n        background-color: #aaa;\n      }\n\n      .' + className + '__rawContent::before {\n        content: \'\';\n        width: 3px;\n        display: inline-block;\n        vertical-align: middle;\n        position: absolute;\n        top: 0;\n        left: 0;\n        bottom: 0;\n      }\n\n      .' + className + '__rawContent > p:first-child {\n        margin-top: 5px;\n      }\n\n      .' + className + '__rawContent > p:last-child{\n        margin-bottom: 5px;\n      }\n\n      .' + className + '__rawContent p {\n        line-height: 1.8;\n      }\n\n      .' + className + '__rawContent pre {\n        line-height: 1.3;\n        font-size: 0.8em;\n        margin: 0;\n      }\n    ';
+	    return '\n      .' + className + '__field--raw {\n        height: auto;\n        padding: 0 7px 0 10px;\n        overflow: hidden;\n      }\n\n      .' + className + '__rawContent {\n        max-width: 100%;\n        margin: 0;\n        padding: 0;\n      }\n\n      .' + className + '__rawContent a {\n        color: inherit;\n      }\n\n      .' + className + '__rawContent::before {\n        background-color: #aaa;\n      }\n\n      .' + className + '__rawContent::before {\n        content: \'\';\n        width: 3px;\n        display: inline-block;\n        vertical-align: middle;\n        position: absolute;\n        top: 0;\n        left: 0;\n        bottom: 0;\n      }\n\n      .' + className + '__rawContent > p:first-child {\n        margin-top: 5px;\n      }\n\n      .' + className + '__rawContent > p:last-child{\n        margin-bottom: 5px;\n      }\n\n      .' + className + '__rawContent p {\n        line-height: 1.8;\n      }\n\n      .' + className + '__rawContent pre {\n        line-height: 1.3;\n        font-size: 0.8em;\n        margin: 0;\n      }\n    ';
 	  }
 	};
 
