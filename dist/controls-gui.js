@@ -1353,11 +1353,14 @@
 	      this.contentsEl = ref;
 	    },
 
-	    activateTab: function (tabName) {
+	    activateTab: function (tabName, event) {
 	      this.setState({
 	        activeTab: tabName
 	      });
+	      event.preventDefault();
 	    },
+
+	    preventDefault: function (ref) {},
 
 	    render: function () {
 	      var _this = this;
@@ -1396,22 +1399,21 @@
 	        return h$3('li', {
 	          className: className + '__tabItem ' + (tabName === _this.state.activeTab ? className + '__tabItem--active' : '')
 	        }, h$3('a', {
-	          href: '#' + tabName,
-	          id: 'tab-' + tabName,
-	          onClick: function () {
-	            return _this.activateTab(tabName);
+	          href: '#' + className + '-' + field.path + '-' + tabName,
+	          onClick: function (event) {
+	            return _this.activateTab(tabName, event);
 	          }
 	        }, names[tabName]));
 	      })), tabs.map(function (tabName) {
 	        return tabName === _this.state.activeTab && h$3('div', {
 	          className: className + '__tabPanel',
-	          id: tabName
+	          id: className + '-' + field.path + '-' + tabName
 	        }, h$3(_this.props.ControlComponent, { field: field.value.$path[tabName].$field }));
 	      }));
 	    }
 	  }),
 	  css: function (className, theme) {
-	    return '\n      .' + className + '__tabs {\n        margin: 0;\n        margin-top: -1px;\n        padding: 0;\n        border: none;\n      }\n\n      .' + className + '__tabList {\n        background-color: ' + theme.sectionHeadingBgColor + ';\n        border-bottom: 6px solid ' + theme.activeTabBgColor + ';\n        display: flex;\n        flex-wrap: wrap;\n        flex-direction: row;\n        margin: 0;\n        padding: 0;\n        padding-top: 6px;\n        align-items: flex-end;\n      }\n\n      .' + className + '__tabItem {\n        -moz-user-select: none;\n        -webkit-user-select: none;\n        user-select: none;\n        list-style-type: none;\n        border-top-left-radius: 2px;\n        border-top-right-radius: 2px;\n        margin-left: 6px;\n        display: inline-block;\n        background-color: ' + theme.inactiveTabBgColor + ';\n        color: ' + theme.inactiveTabColor + ';\n        padding: 5px 7px;\n        padding-bottom: 3px;\n        margin-top: 5px;\n      }\n\n      .' + className + '__tabItem:hover {\n        background-color: ' + theme.inactiveTabHoverBgColor + ';\n        color: ' + theme.inactiveTabHoverColor + ';\n      }\n\n      .' + className + '__tabItem--active {\n        background-color: ' + theme.activeTabBgColor + ';\n        color: ' + theme.activeTabColor + ';\n        padding-bottom: 5px;\n        margin-top: 3px;\n      }\n\n      .' + className + '__tabItem--active:hover {\n        background-color: ' + theme.activeTabBgColor + ';\n        color: ' + theme.activeTabColor + ';\n      }\n\n      .' + className + '__tabItem a {\n        color: inherit;\n        text-decoration: none;\n      }\n    ';
+	    return '\n      .' + className + '__tabs {\n        margin: 0;\n        margin-top: -1px;\n        padding: 0;\n        border: none;\n      }\n\n      .' + className + '__tabList {\n        background-color: ' + theme.sectionHeadingBgColor + ';\n        border-bottom: 6px solid ' + theme.activeTabBgColor + ';\n        display: flex;\n        flex-wrap: wrap;\n        flex-direction: row;\n        margin: 0;\n        padding: 0;\n        padding-top: 6px;\n        align-items: flex-end;\n      }\n\n      .' + className + '__tabItem {\n        -moz-user-select: none;\n        -webkit-user-select: none;\n        user-select: none;\n        list-style-type: none;\n        border-top-left-radius: 2px;\n        border-top-right-radius: 2px;\n        margin-left: 6px;\n        display: inline-block;\n        background-color: ' + theme.inactiveTabBgColor + ';\n        color: ' + theme.inactiveTabColor + ';\n        padding: 5px 7px;\n        padding-bottom: 3px;\n        margin-top: 5px;\n      }\n\n      .' + className + '__tabItem:before {\n        content: none;\n      }\n\n      .' + className + '__tabItem:hover {\n        background-color: ' + theme.inactiveTabHoverBgColor + ';\n        color: ' + theme.inactiveTabHoverColor + ';\n      }\n\n      .' + className + '__tabItem--active {\n        background-color: ' + theme.activeTabBgColor + ';\n        color: ' + theme.activeTabColor + ';\n        padding-bottom: 5px;\n        margin-top: 3px;\n      }\n\n      .' + className + '__tabItem--active:hover {\n        background-color: ' + theme.activeTabBgColor + ';\n        color: ' + theme.activeTabColor + ';\n      }\n\n      .' + className + '__tabItem a {\n        color: inherit;\n        text-decoration: none;\n      }\n    ';
 	  }
 	};
 

@@ -17,10 +17,14 @@ module.exports = {
       this.contentsEl = ref;
     },
 
-    activateTab: function (tabName) {
+    activateTab: function (tabName, event) {
       this.setState({
         activeTab: tabName
       });
+      event.preventDefault();
+    },
+
+    preventDefault: function (ref) {
     },
 
     render: function () {
@@ -60,16 +64,15 @@ module.exports = {
             h('li', {
               className: `${className}__tabItem ${tabName === this.state.activeTab ? `${className}__tabItem--active` : ''}`,
             }, h('a', {
-              href: `#${tabName}`,
-              id: `tab-${tabName}`,
-              onClick: () => this.activateTab(tabName)
+              href: `#${className}-${field.path}-${tabName}`,
+              onClick: (event) => this.activateTab(tabName, event)
             }, names[tabName]))
           )
         ),
         tabs.map(tabName => 
           tabName === this.state.activeTab && h('div', {
             className: `${className}__tabPanel`,
-            id: tabName,
+            id: `${className}-${field.path}-${tabName}`,
           },
             h(this.props.ControlComponent, {field: field.value.$path[tabName].$field})
           )
@@ -112,6 +115,10 @@ module.exports = {
         padding: 5px 7px;
         padding-bottom: 3px;
         margin-top: 5px;
+      }
+
+      .${className}__tabItem:before {
+        content: none;
       }
 
       .${className}__tabItem:hover {
