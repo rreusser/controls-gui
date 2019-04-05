@@ -14,4 +14,7 @@ gui.registerComponents([
   require('./src/components/raw'),
 ]);
 
+gui.preact = require('preact');
+gui.preact.createClass = require('./src/util/preact-classless-component');
+
 module.exports = gui;

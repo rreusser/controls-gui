@@ -14,6 +14,7 @@ export default [
 ].map(bundle => ({
   input: bundle.input,
   output: {
+    //exports: 'named',
     file: bundle.output,
     format: bundle.format,
     name: bundle.name,

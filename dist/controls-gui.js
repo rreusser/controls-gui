@@ -976,7 +976,7 @@
 	  return options;
 	};
 
-	var preact$2 = getCjsExportFromNamespace(preact$1);
+	var require$$9 = getCjsExportFromNamespace(preact$1);
 
 	// From preact-classless-component: https://github.com/laurencedorman/preact-classless-component#readme
 	//
@@ -1005,7 +1005,7 @@
 
 	var preactClasslessComponent = function (obj) {
 	  function preactComponent() {
-	    preact$2.Component.apply(this, arguments);
+	    require$$9.Component.apply(this, arguments);
 
 	    for (var i in obj) {
 	      if (i !== 'render' && typeof obj[i] === 'function') {
@@ -1018,7 +1018,7 @@
 	    }
 	  }
 
-	  preactComponent.prototype = Object.assign(Object.create(preact$2.Component.prototype), obj);
+	  preactComponent.prototype = Object.assign(Object.create(require$$9.Component.prototype), obj);
 
 	  preactComponent.prototype.constructor = preactComponent;
 
@@ -1118,12 +1118,12 @@
 
 	    var ControlComponent = preactClasslessComponent({
 	      render: function () {
-	        return preact$2.h(getComponent(this.props.field.type).component, {
+	        return require$$9.h(getComponent(this.props.field.type).component, {
 	          ControlComponent: ControlComponent,
 	          className: className,
 	          field: this.props.field,
 	          state: state,
-	          h: preact$2.h
+	          h: require$$9.h
 	        });
 	      }
 	    });
@@ -1150,10 +1150,10 @@
 	        }
 	      },
 	      render: function () {
-	        return preact$2.h('div', {
+	        return require$$9.h('div', {
 	          className: '' + className,
 	          ref: this.getRef
-	        }, preact$2.h(ControlComponent, { field: this.props.state.$field }));
+	        }, require$$9.h(ControlComponent, { field: this.props.state.$field }));
 	      }
 	    });
 
@@ -1161,7 +1161,7 @@
 	      insertCss_1(computeStyles(className, opts.theme, components));
 	    }
 
-	    preact$2.render(preact$2.h(App, {
+	    require$$9.render(require$$9.h(App, {
 	      state: state
 	    }), opts.root);
 
@@ -1171,7 +1171,7 @@
 	  return GUI;
 	};
 
-	var h$1 = preact$2.h;
+	var h$1 = require$$9.h;
 
 	var select = {
 	  name: 'select',
@@ -1281,7 +1281,7 @@
 	  }
 	};
 
-	var h$2 = preact$2.h;
+	var h$2 = require$$9.h;
 
 	var section = {
 	  name: 'section',
@@ -1336,7 +1336,7 @@
 	  }
 	};
 
-	var h$3 = preact$2.h;
+	var h$3 = require$$9.h;
 
 	var tabs = {
 	  name: 'tabs',
@@ -1417,7 +1417,7 @@
 	  }
 	};
 
-	var h$4 = preact$2.h;
+	var h$4 = require$$9.h;
 
 	var slider = {
 	  name: 'slider',
@@ -1454,7 +1454,7 @@
 	  }
 	};
 
-	var h$5 = preact$2.h;
+	var h$5 = require$$9.h;
 
 	var checkbox = {
 	  name: 'checkbox',
@@ -1488,7 +1488,7 @@
 	  }
 	};
 
-	var h$6 = preact$2.h;
+	var h$6 = require$$9.h;
 
 	var textinput = {
 	  name: 'textinput',
@@ -1522,7 +1522,7 @@
 	  }
 	};
 
-	var h$7 = preact$2.h;
+	var h$7 = require$$9.h;
 
 	var button = {
 	  name: 'button',
@@ -1543,7 +1543,7 @@
 	  }
 	};
 
-	var h$8 = preact$2.h;
+	var h$8 = require$$9.h;
 
 	var color = {
 	  name: 'color',
@@ -1577,7 +1577,7 @@
 	  }
 	};
 
-	var h$9 = preact$2.h;
+	var h$9 = require$$9.h;
 
 	var raw = {
 	  name: 'raw',
@@ -1615,6 +1615,9 @@
 	var gui = factory();
 
 	gui.registerComponents([select, section, tabs, slider, checkbox, textinput, button, color, raw]);
+
+	gui.preact = require$$9;
+	gui.preact.createClass = preactClasslessComponent;
 
 	var controlsGui = gui;
 
