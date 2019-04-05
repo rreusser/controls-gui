@@ -1,6 +1,6 @@
 {
   "name": "controls-gui",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A GUI for managing state",
   "main": "dist/controls-gui.min.js",
   "scripts": {
