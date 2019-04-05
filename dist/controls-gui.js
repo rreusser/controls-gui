@@ -1045,6 +1045,15 @@
 	  sectionHeadingHoverColor: '#444',
 	  sectionHeadingColor: '#e8e8e8',
 	  sectionHeadingBorderColor: '#222',
+
+	  inactiveTabBgColor: '#333',
+	  inactiveTabColor: '#ccc',
+	  inactiveTabHoverBgColor: '#444',
+	  inactiveTabHoverColor: '#ccc',
+
+	  activeTabBgColor: '#555',
+	  activeTabColor: '#fff',
+
 	  controlBorderColor: '#666',
 	  sliderThumbColor: '#888',
 	  fontColor: '#e8e8e8',
@@ -1304,10 +1313,13 @@
 	      var config = field.$config;
 	      var title = config.label || field.name;
 	      var className = this.props.className;
-	      if (!field.parentField && title === '') title = 'Controls';
+
+	      var hasWrapper = !field.parent || field.parent.type !== 'tabs';
+
+	      if (!field.parentField && !title) title = 'Controls';
 	      return h$2('fieldset', {
-	        className: className + '__section ' + (this.state.expanded ? className + '__section--expanded' : '')
-	      }, h$2('legend', {
+	        className: className + '__section ' + (this.state.expanded ? className + '__section--expanded' : '') + ' ' + (hasWrapper ? className + '__section--wrapped' : '')
+	      }, hasWrapper && h$2('legend', {
 	        className: className + '__sectionHeading'
 	      }, h$2('button', { onClick: this.toggleCollapsed }, title)), h$2('div', {
 	        ref: this.getRef,
@@ -1320,11 +1332,90 @@
 	    }
 	  }),
 	  css: function (className, theme) {
-	    return '\n      .' + className + '__section {\n        margin: 0;\n        margin-top: -1px;\n        padding: 0;\n        border: none;\n      }\n\n      .' + className + '__sectionHeading {\n        border: 1px solid ' + theme.sectionHeadingBorderColor + ';\n        position: relative;\n        z-index: 1;\n        box-sizing: border-box;\n      }\n\n      .' + className + '__sectionFields {\n        margin-left: 4px;\n        box-sizing: border-box;\n      }\n\n      .' + className + '__sectionFields .' + className + '__field {\n        border-bottom: 1px solid ' + theme.fieldBorderColor + ';\n        box-sizing: border-box;\n      }\n\n      .' + className + '__sectionFields .' + className + '__sectionFields {\n        border-right: none;\n        margin-right: 0;\n      }\n\n      .' + className + ' > .' + className + '__section:first-child > .' + className + '__sectionHeading:first-child {\n        border-right: 1px solid ' + theme.sectionHeadingBorderColor + ';\n      }\n\n      .' + className + '__sectionHeading {\n        padding: 0;\n        font-family: inherit;\n        user-select: none;\n        -moz-user-select: -moz-none;\n        text-indent: 5px;\n        cursor: pointer;\n        width: 100%;\n\n        color: ' + theme.sectionHeadingColor + ';\n        background-color: ' + theme.sectionHeadingBgColor + ';\n        height: ' + theme.sectionHeadingHeight + ';\n        line-height: ' + theme.sectionHeadingHeight + ';\n      }\n\n      .' + className + '__sectionHeading button:focus {\n        background-color: ' + theme.sectionHeadingHoverColor + ';\n      }\n\n      .' + className + '__sectionHeading > button {\n        height: 100%;\n        vertical-align: middle;\n        font-size: 1.0em;\n        cursor: pointer;\n        text-align: left;\n        outline: none;\n        color: inherit;\n        font-size: inherit;\n        font-family: inherit;\n        background: transparent;\n        border: none;\n        border-radius: 0;\n        display: block;\n        width: 100%;\n      }\n\n      .' + className + '__sectionHeading:hover {\n        background-color: ' + theme.sectionHeadingHoverColor + ';\n      }\n\n      .' + className + '__sectionHeading > button::before {\n        transform: translate(0, -1px) rotate(90deg);\n      }\n\n      .' + className + '__sectionHeading > button::before {\n        content: \'\u25B2\';\n        display: inline-block;\n        transform-origin: 50% 50%;\n        margin-right: 0.5em;\n        font-size: 0.5em;\n        vertical-align: middle;\n      }\n\n      .' + className + '__section--expanded > .' + className + '__sectionHeading > button::before {\n        transform: none;\n        content: \'\u25BC\';\n      }\n    ';
+	    return '\n      .' + className + '__section {\n        margin: 0;\n        margin-top: -1px;\n        padding: 0;\n        border: none;\n      }\n\n      .' + className + '__sectionHeading {\n        border: 1px solid ' + theme.sectionHeadingBorderColor + ';\n        position: relative;\n        z-index: 1;\n        box-sizing: border-box;\n      }\n\n      .' + className + '__section--wrapped > .' + className + '__sectionFields {\n        margin-left: 4px;\n      }\n\n      .' + className + '__sectionFields {\n        box-sizing: border-box;\n      }\n\n      .' + className + '__sectionFields .' + className + '__field {\n        border-bottom: 1px solid ' + theme.fieldBorderColor + ';\n        box-sizing: border-box;\n      }\n\n      .' + className + '__sectionFields .' + className + '__sectionFields {\n        border-right: none;\n        margin-right: 0;\n      }\n\n      .' + className + ' > .' + className + '__section:first-child > .' + className + '__sectionHeading:first-child {\n        border-right: 1px solid ' + theme.sectionHeadingBorderColor + ';\n      }\n\n      .' + className + '__sectionHeading {\n        padding: 0;\n        font-family: inherit;\n        user-select: none;\n        -moz-user-select: -moz-none;\n        text-indent: 5px;\n        cursor: pointer;\n        width: 100%;\n\n        color: ' + theme.sectionHeadingColor + ';\n        background-color: ' + theme.sectionHeadingBgColor + ';\n        height: ' + theme.sectionHeadingHeight + ';\n        line-height: ' + theme.sectionHeadingHeight + ';\n      }\n\n      .' + className + '__sectionHeading button:focus {\n        background-color: ' + theme.sectionHeadingHoverColor + ';\n      }\n\n      .' + className + '__sectionHeading > button {\n        height: 100%;\n        vertical-align: middle;\n        font-size: 1.0em;\n        cursor: pointer;\n        text-align: left;\n        outline: none;\n        color: inherit;\n        font-size: inherit;\n        font-family: inherit;\n        background: transparent;\n        border: none;\n        border-radius: 0;\n        display: block;\n        width: 100%;\n      }\n\n      .' + className + '__sectionHeading:hover {\n        background-color: ' + theme.sectionHeadingHoverColor + ';\n      }\n\n      .' + className + '__sectionHeading > button::before {\n        transform: translate(0, -1px) rotate(90deg);\n      }\n\n      .' + className + '__sectionHeading > button::before {\n        content: \'\u25B2\';\n        display: inline-block;\n        transform-origin: 50% 50%;\n        margin-right: 0.5em;\n        font-size: 0.5em;\n        vertical-align: middle;\n      }\n\n      .' + className + '__section--expanded > .' + className + '__sectionHeading > button::before {\n        transform: none;\n        content: \'\u25BC\';\n      }\n    ';
 	  }
 	};
 
 	var h$3 = preact$2.h;
+
+	var tabs = {
+	  name: 'tabs',
+	  component: preactClasslessComponent({
+	    init: function () {
+	      var field = this.props.field;
+	      var tabs = Object.keys(field.value.$displayFields);
+
+	      this.state = {
+	        activeTab: tabs[0]
+	      };
+	    },
+	    getRef: function (ref) {
+	      this.contentsEl = ref;
+	    },
+
+	    activateTab: function (tabName) {
+	      this.setState({
+	        activeTab: tabName
+	      });
+	    },
+
+	    render: function () {
+	      var _this = this;
+
+	      var field = this.props.field;
+	      var config = field.$config;
+	      var title = config.label || field.name;
+	      var className = this.props.className;
+
+	      if (!field.parentField && title === '') title = 'Controls';
+
+	      var tabs = Object.keys(field.value.$displayFields);
+
+	      var names = {};
+	      for (var i = 0; i < tabs.length; i++) {
+	        var tabName = tabs[i];
+	        names[tabName] = tabName;
+
+	        var tabPath = field.value.$path[tabName];
+	        if (!tabPath) continue;
+
+	        var tabField = tabPath.$field;
+	        if (!tabField) continue;
+
+	        var tabConfig = tabField.$config;
+	        if (!tabConfig) continue;
+
+	        if (tabConfig.label) names[tabName] = tabConfig.label;
+	      }
+
+	      return h$3('div', {
+	        className: className + '__tabs'
+	      }, h$3('ul', {
+	        className: className + '__tabList'
+	      }, tabs.map(function (tabName) {
+	        return h$3('li', {
+	          className: className + '__tabItem ' + (tabName === _this.state.activeTab ? className + '__tabItem--active' : '')
+	        }, h$3('a', {
+	          href: '#' + tabName,
+	          id: 'tab-' + tabName,
+	          onClick: function () {
+	            return _this.activateTab(tabName);
+	          }
+	        }, names[tabName]));
+	      })), tabs.map(function (tabName) {
+	        return tabName === _this.state.activeTab && h$3('div', {
+	          className: className + '__tabPanel',
+	          id: tabName
+	        }, h$3(_this.props.ControlComponent, { field: field.value.$path[tabName].$field }));
+	      }));
+	    }
+	  }),
+	  css: function (className, theme) {
+	    return '\n      .' + className + '__tabs {\n        margin: 0;\n        margin-top: -1px;\n        padding: 0;\n        border: none;\n      }\n\n      .' + className + '__tabList {\n        background-color: ' + theme.sectionHeadingBgColor + ';\n        border-bottom: 6px solid ' + theme.activeTabBgColor + ';\n        display: flex;\n        flex-wrap: wrap;\n        flex-direction: row;\n        margin: 0;\n        padding: 0;\n        padding-top: 6px;\n        align-items: flex-end;\n      }\n\n      .' + className + '__tabItem {\n        -moz-user-select: none;\n        -webkit-user-select: none;\n        user-select: none;\n        list-style-type: none;\n        border-top-left-radius: 2px;\n        border-top-right-radius: 2px;\n        margin-left: 6px;\n        display: inline-block;\n        background-color: ' + theme.inactiveTabBgColor + ';\n        color: ' + theme.inactiveTabColor + ';\n        padding: 5px 7px;\n        padding-bottom: 3px;\n        margin-top: 5px;\n      }\n\n      .' + className + '__tabItem:hover {\n        background-color: ' + theme.inactiveTabHoverBgColor + ';\n        color: ' + theme.inactiveTabHoverColor + ';\n      }\n\n      .' + className + '__tabItem--active {\n        background-color: ' + theme.activeTabBgColor + ';\n        color: ' + theme.activeTabColor + ';\n        padding-bottom: 5px;\n        margin-top: 3px;\n      }\n\n      .' + className + '__tabItem--active:hover {\n        background-color: ' + theme.activeTabBgColor + ';\n        color: ' + theme.activeTabColor + ';\n      }\n\n      .' + className + '__tabItem a {\n        color: inherit;\n        text-decoration: none;\n      }\n    ';
+	  }
+	};
+
+	var h$4 = preact$2.h;
 
 	var slider = {
 	  name: 'slider',
@@ -1335,14 +1426,14 @@
 	      var field = this.props.field;
 	      var config = field.$config;
 	      var className = this.props.className;
-	      return h$3('div', {
+	      return h$4('div', {
 	        className: className + '__field ' + className + '__field--slider'
-	      }, h$3('label', {
+	      }, h$4('label', {
 	        className: className + '__label',
 	        htmlFor: className + '-' + field.path
-	      }, h$3('span', {
+	      }, h$4('span', {
 	        className: className + '__labelText'
-	      }, config.label || field.name), ' ', h$3('span', { className: className + '__container' }, h$3('input', {
+	      }, config.label || field.name), ' ', h$4('span', { className: className + '__container' }, h$4('input', {
 	        id: className + '-' + field.path,
 	        name: field.path,
 	        type: 'range',
@@ -1353,7 +1444,7 @@
 	        onInput: function (event) {
 	          return _this.props.field.value = parseFloat(event.target.value);
 	        }
-	      }), h$3('span', { className: className + '__sliderValue' }, field.value.toFixed(4).replace(/\.?0*$/, '')))));
+	      }), h$4('span', { className: className + '__sliderValue' }, field.value.toFixed(4).replace(/\.?0*$/, '')))));
 	    }
 	  }),
 	  css: function sliderCSS(className, theme) {
@@ -1361,7 +1452,7 @@
 	  }
 	};
 
-	var h$4 = preact$2.h;
+	var h$5 = preact$2.h;
 
 	var checkbox = {
 	  name: 'checkbox',
@@ -1372,14 +1463,14 @@
 	      var field = this.props.field;
 	      var config = field.$config;
 	      var className = this.props.className;
-	      return h$4('div', {
+	      return h$5('div', {
 	        className: className + '__field ' + className + '__field--checkbox'
-	      }, h$4('label', {
+	      }, h$5('label', {
 	        className: className + '__label',
 	        htmlFor: className + '-' + field.path
-	      }, h$4('span', {
+	      }, h$5('span', {
 	        className: className + '__labelText'
-	      }, config.label || field.name), ' ', h$4('span', { className: className + '__container' }, h$4('input', {
+	      }, config.label || field.name), ' ', h$5('span', { className: className + '__container' }, h$5('input', {
 	        id: className + '-' + field.path,
 	        name: field.path,
 	        type: 'checkbox',
@@ -1395,7 +1486,7 @@
 	  }
 	};
 
-	var h$5 = preact$2.h;
+	var h$6 = preact$2.h;
 
 	var textinput = {
 	  name: 'textinput',
@@ -1406,14 +1497,14 @@
 	      var field = this.props.field;
 	      var config = field.$config;
 	      var className = this.props.className;
-	      return h$5('div', {
+	      return h$6('div', {
 	        className: className + '__field ' + className + '__field--text'
-	      }, h$5('label', {
+	      }, h$6('label', {
 	        className: className + '__label',
 	        htmlFor: className + '-' + field.path
-	      }, h$5('span', {
+	      }, h$6('span', {
 	        className: className + '__labelText'
-	      }, config.label || field.name), ' ', h$5('span', { className: className + '__container' }, h$5('input', {
+	      }, config.label || field.name), ' ', h$6('span', { className: className + '__container' }, h$6('input', {
 	        id: className + '-' + field.path,
 	        name: field.path,
 	        type: 'text',
@@ -1429,7 +1520,7 @@
 	  }
 	};
 
-	var h$6 = preact$2.h;
+	var h$7 = preact$2.h;
 
 	var button = {
 	  name: 'button',
@@ -1438,9 +1529,9 @@
 	      var field = this.props.field;
 	      var config = field.$config;
 	      var className = this.props.className;
-	      return h$6('div', {
+	      return h$7('div', {
 	        className: className + '__field ' + className + '__field--button'
-	      }, h$6('button', {
+	      }, h$7('button', {
 	        onClick: field.value
 	      }, config.label || field.name));
 	    }
@@ -1450,7 +1541,7 @@
 	  }
 	};
 
-	var h$7 = preact$2.h;
+	var h$8 = preact$2.h;
 
 	var color = {
 	  name: 'color',
@@ -1461,14 +1552,14 @@
 	      var field = this.props.field;
 	      var config = field.$config;
 	      var className = this.props.className;
-	      return h$7('div', {
+	      return h$8('div', {
 	        className: className + '__field ' + className + '__field--color'
-	      }, h$7('label', {
+	      }, h$8('label', {
 	        className: className + '__label',
 	        htmlFor: className + '-' + field.path
-	      }, h$7('span', {
+	      }, h$8('span', {
 	        className: className + '__labelText'
-	      }, config.label || field.name), ' ', h$7('span', { className: className + '__container' }, h$7('input', {
+	      }, config.label || field.name), ' ', h$8('span', { className: className + '__container' }, h$8('input', {
 	        id: className + '-' + field.path,
 	        name: field.path,
 	        type: 'color',
@@ -1484,7 +1575,7 @@
 	  }
 	};
 
-	var h$8 = preact$2.h;
+	var h$9 = preact$2.h;
 
 	var raw = {
 	  name: 'raw',
@@ -1496,7 +1587,7 @@
 	    getContent: function (props) {
 	      this.content = props.field.value;
 	      if (typeof this.content === 'function') {
-	        this.content = this.content(h$8, {
+	        this.content = this.content(h$9, {
 	          field: props.field,
 	          state: props.state
 	        });
@@ -1506,9 +1597,9 @@
 
 	    render: function () {
 	      var className = this.props.className;
-	      return h$8('div', {
+	      return h$9('div', {
 	        className: className + '__field--raw ' + className + '__field'
-	      }, h$8('div', {
+	      }, h$9('div', {
 	        ref: this.getRef,
 	        className: className + '__rawContent'
 	      }, this.getContent(this.props)));
@@ -1521,7 +1612,7 @@
 
 	var gui = factory();
 
-	gui.registerComponents([select, section, slider, checkbox, textinput, button, color, raw]);
+	gui.registerComponents([select, section, tabs, slider, checkbox, textinput, button, color, raw]);
 
 	var controlsGui = gui;
 

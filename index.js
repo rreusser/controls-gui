@@ -5,6 +5,7 @@ var gui = guiFactory();
 gui.registerComponents([
   require('./src/components/select'),
   require('./src/components/section'),
+  require('./src/components/tabs'),
   require('./src/components/slider'),
   require('./src/components/checkbox'),
   require('./src/components/textinput'),

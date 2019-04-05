@@ -31,15 +31,18 @@ module.exports = {
       var config = field.$config;
       var title = config.label || field.name;
       var className = this.props.className;
-      if (!field.parentField && title === '') title = 'Controls'
+
+      var hasWrapper = !field.parent || field.parent.type !== 'tabs'
+
+      if (!field.parentField && !title) title = 'Controls'
       return h('fieldset', {
-        className: `${className}__section ${this.state.expanded ? `${className}__section--expanded` : ''}`,
+        className: `${className}__section ${this.state.expanded ? `${className}__section--expanded` : ''} ${hasWrapper ? `${className}__section--wrapped` : ''}`,
       }, 
-        h('legend', {
+        (hasWrapper) && (h('legend', {
           className: `${className}__sectionHeading`,
         }, 
           h('button', {onClick: this.toggleCollapsed}, title)
-        ),
+        )),
         h('div', {
           ref: this.getRef,
           className: `${className}__sectionFields`,
@@ -69,8 +72,11 @@ module.exports = {
         box-sizing: border-box;
       }
 
-      .${className}__sectionFields {
+      .${className}__section--wrapped > .${className}__sectionFields {
         margin-left: 4px;
+      }
+
+      .${className}__sectionFields {
         box-sizing: border-box;
       }
 

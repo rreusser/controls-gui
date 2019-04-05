@@ -12,6 +12,15 @@ module.exports = {
   sectionHeadingHoverColor: '#444',
   sectionHeadingColor: '#e8e8e8',
   sectionHeadingBorderColor: '#222',
+
+  inactiveTabBgColor: '#333',
+  inactiveTabColor: '#ccc',
+  inactiveTabHoverBgColor: '#444',
+  inactiveTabHoverColor: '#ccc',
+
+  activeTabBgColor: '#555',
+  activeTabColor: '#fff',
+
   controlBorderColor: '#666',
   sliderThumbColor: '#888',
   fontColor: '#e8e8e8',

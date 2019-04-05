@@ -38,10 +38,10 @@ require('insert-css')(`
 `);
 
 
-var controls = window.controls = Controls({
-  foo: Controls.Slider(50),
-  bar: Controls.Slider(80)
-});
+var controls = window.controls = Controls.Slider(5, {label: 'Slider'})
 
-var gui1 = wrapGui(controls.$path.foo, {style: false, containerCSS: null});
-var gui2 = wrapGui(controls.$path.bar, {style: false, containerCSS: null});
+var gui1 = window.gui1 = wrapGui(controls, {style: false, containerCSS: null});
+
+var section = window.section = Controls({name: Controls.Slider(5, {label: 'Slider'})});
+
+var gui2 = window.gui2 = wrapGui(section, {style: false, containerCSS: null});
