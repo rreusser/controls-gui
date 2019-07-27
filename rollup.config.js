@@ -9,7 +9,7 @@ export default [
     input: 'index.js',
     output: 'dist/controls-gui.js',
     format: 'umd',
-    name: 'ControlsGUI',
+    name: 'wrapGUI',
   },
 ].map(bundle => ({
   input: bundle.input,
