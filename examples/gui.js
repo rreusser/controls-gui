@@ -1,5 +1,5 @@
 var wrapGui = require('../index');
-var Controls = require('../../controls-state');
+var Controls = require('../../controls-state/src/index');
 var h = require('h');
 var beautify = require('json-beautify');
 
@@ -51,6 +51,13 @@ document.body.append(h('div.docs', [
     iterations: 5,
     method: Controls.Select('RK4', {
       options: ['Euler', 'RK2', 'RK4']
+    }),
+    timeStep: Controls.Slider(1.0, {
+      mapping: x => Math.pow(10, x),
+      inverseMapping: Math.log10,
+      min: 0.001,
+      max: 1000.0,
+      steps: 100,
     }),
     shape: {
       width: 640,
@@ -193,6 +200,14 @@ var controls = window.controls = Controls(
 
       method: Controls.Select('RK4', {
         options: ['Euler', 'RK2', 'RK4']
+      }),
+
+      timeStep: Controls.Slider(1.0, {
+        mapping: x => Math.pow(10, x),
+        inverseMapping: Math.log10,
+        min: 0.001,
+        max: 1000.0,
+        steps: 100,
       }),
 
       shape: Controls.Section({

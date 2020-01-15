@@ -1346,12 +1346,12 @@
 	        id: className + '-' + field.path,
 	        name: field.path,
 	        type: 'range',
-	        min: field.min,
-	        max: field.max,
-	        step: field.step,
-	        value: field.value,
+	        min: this.props.field.inverseMapping(field.min),
+	        max: this.props.field.inverseMapping(field.max),
+	        step: (this.props.field.inverseMapping(this.props.field.max) - this.props.field.inverseMapping(this.props.field.min)) / this.props.field.steps,
+	        value: this.props.field.inverseMapping(field.value),
 	        onInput: function (event) {
-	          return _this.props.field.value = parseFloat(event.target.value);
+	          return _this.props.field.value = parseFloat(_this.props.field.mapping(event.target.value));
 	        }
 	      }), h$3('span', { className: className + '__sliderValue' }, field.value.toFixed(4).replace(/\.?0*$/, '')))));
 	    }
