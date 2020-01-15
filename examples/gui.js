@@ -143,7 +143,7 @@ false`)),
   h('h2', 'Markup'),
   h('p', 'Since it\'s loosely coupled to the GUI, you can simply create additional GUI instances! And it\'s all just (reasonably) semantic HTML. Unstyled, the panel looks like this.'),
   inlineControlsDiv,
-  
+
   h('h2', 'Advanced Usage'),
   h('p', 'Sections are a bit fancy so that you can typically just get or set properties by name. You may access the section instance itself using ', h('code', '$field'), '.'),
 

@@ -31,11 +31,14 @@ module.exports = function GuiFactory () {
       containerCSS: "position:fixed;top:0;right:8px",
       style: true,
       className: `controlPanel-${Math.random().toString(36).substring(2, 15)}`,
+      expanded: true,
     });
 
     opts.root = opts.root || document.body;
 
     var className = opts.className;
+
+    state.$field.$config.expanded = opts.expanded
 
     var ControlComponent = createClass({
       render: function () {
