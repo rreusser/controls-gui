@@ -25,11 +25,11 @@ module.exports = {
               id: `${className}-${field.path}`,
               name: field.path,
               type: 'range',
-              min: field.min,
-              max: field.max,
-              step: field.step,
-              value: field.value,
-              onInput: event => this.props.field.value = parseFloat(event.target.value)
+              min: this.props.field.inverseMapping(field.min),
+              max: this.props.field.inverseMapping(field.max),
+              step: (this.props.field.inverseMapping(this.props.field.max) - this.props.field.inverseMapping(this.props.field.min)) / this.props.field.steps,
+              value: this.props.field.inverseMapping(field.value),
+              onInput: event => this.props.field.value = parseFloat(this.props.field.mapping(event.target.value))
             }),
             h('span', {className: `${className}__sliderValue`}, field.value.toFixed(4).replace(/\.?0*$/,'')) )
         )
